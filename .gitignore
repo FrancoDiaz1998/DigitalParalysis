@@ -1,0 +1,99 @@
+# =========================
+# .NET / ASP.NET Core
+# =========================
+
+# Compilados
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# =========================
+# Base de datos / SQL
+# =========================
+
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Backups de base de datos
+*.bak
+
+# =========================
+# Archivos de texto
+# =========================
+
+*.txt
+
+# =========================
+# Variables de entorno / secretos
+# =========================
+
+.env
+.env.*
+secrets.json
+
+# =========================
+# Configuración local
+# =========================
+
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.Local.json
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+*.snupkg
+
+# =========================
+# Sistema operativo
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# =========================
+# Cobertura / tests
+# =========================
+
+TestResults/
+coverage/
+coverage.*
+*.coverage
+
+# =========================
+# Publicaciones
+# =========================
+
+publish/
+artifacts/
+
+# =========================
+# Otros
+# =========================
+
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+node_modules/
