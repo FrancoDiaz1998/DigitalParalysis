@@ -1,0 +1,20 @@
+// CREA LA SOLUCION //
+dotnet new sln -n DigitalParalysis     
+
+// CREAMOS LOS PROYECTOS //
+dotnet new webapi -n DigitalParalysis.API
+dotnet new classlib -n DigitalParalysis.Application
+dotnet new classlib -n DigitalParalysis.Domain
+dotnet new classlib -n DigitalParalysis.Infrastructure
+
+// AGREGAR PROYECTOS A LA SOLUCIÓN //
+dotnet sln add src/DigitalParalysis.API
+dotnet sln add src/DigitalParalysis.Application
+dotnet sln add src/DigitalParalysis.Domain
+dotnet sln add src/DigitalParalysis.Infrastructure
+
+// REFERENCIAS //
+dotnet add src/DigitalParalysis.API reference src/DigitalParalysis.Application
+dotnet add src/DigitalParalysis.API reference src/DigitalParalysis.Infrastructure
+dotnet add src/DigitalParalysis.Application reference src/DigitalParalysis.Domain
+dotnet add src/DigitalParalysis.Infrastructure reference src/DigitalParalysis.Domain

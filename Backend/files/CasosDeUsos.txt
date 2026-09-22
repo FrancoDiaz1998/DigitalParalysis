@@ -1,0 +1,43 @@
+-------------------------------------------------------
+| ACTOR                     |   CASO DE USO           |
+-------------------------------------------------------
+| Visitante                 | Registrarse 
+| Usuario,Admin             | Iniciar sesión
+| Usuario,Admin             | Darse de baja temporal
+| Usuario,Admin             | Eliminar la cuenta
+| Usuario,Admin             | Modificar datos
+| Usuario,Visitante,Admin   | Buscar obra
+| Usuario,Visitante,Admin   | Ver detalle de obra 
+| Usuario,Admin             | Comentar en secciones   
+| Usuario,Admin             | Crear coleccion
+| Usuario,Admin             | Eliminar coleccion
+| Usuario,Admin             | Modificar coleccion
+| Usuario,Admin             | Añadir obra a coleccion
+| Usuario,Admin             | Eliminar obra de coleccion      
+| Usuario,Admin             | Valorar una obra   
+| Usuario,Admin             | Quitar valoración
+| Usuario,Admin             | Denunciar comentario
+| Admin                     | Suspender cuenta
+| Admin                     | Activar cuenta
+| Usuario,Admin             | Crear foro de discusión
+| Admin                     | Modificar datos de foros
+| Admin                     | Eliminar foro
+| Admin                     | Eliminar comentarios de foros
+| Usuario,Admin             | Dar like a comentarios
+| Admin                     | Crear artículos
+| Admin                     | Eliminar artículos
+| Admin                     | Modificar artículos
+
+
+CU-01: Iniciar sesión
+
+•Actor: Usuario, Admin.
+•Objetivo: Acceder al sistema con sus credenciales.
+•Precondición: El cliente debe estar registrado.
+•Flujo principal:
+   •El cliente abre la pantalla de inicio de sesión.
+   •Ingresa su correo y contraseña.
+   •Presiona "Ingresar".
+   •El sistema valida las credenciales.
+   •El sistema muestra la página principal.
+•Postcondición: El cliente queda autenticado.      

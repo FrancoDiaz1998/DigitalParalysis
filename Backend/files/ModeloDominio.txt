@@ -1,0 +1,23 @@
+🧬OBRA🧬: Representa cualquier contenido audiovisual de la página. Pueden ser películas, series, documentales, cortometrajes, etc. Toda obra tiene: su tipo, título, año, género/s, actores/actrices, director/es, imágen ilustrativa, sinópsis, duración, plataformas donde verlas, historia y datos curiososos. Una obra puede recibir múltiples valoraciones y reseñas de distintos usuarios. 
+
+🧬DIRECTOR🧬: Representa al creador o creadores de un obra. Tiene: nombre, apellido, foto, biografía, país, fecha de nacimiento y puede participar en múltiples obras obras. 
+
+🧬ACTOR/ACTRIZ🧬: Representa al protagonista de un obra. Tiene: nombre, apellido, foto, biografía, país, fecha de nacimiento y puede participar en múltiples obras obras.
+
+🧬PLATAFORMA🧬: Representa una plataforma donde una obra puede encontrarse disponible para su visualización. Tiene: nombre, foto, biografía, país, fecha de fundación y obras.
+
+🧬GÉNERO🧬: Representa a la categoria que distingue a una obra. Tiene: nombre, descripción, y obras.
+
+🧬USUARIO🧬: Representa al usuario registrado en Archive 13. El usuario tiene: nombre, apellido, foto, año de nacimiento, rol, estado, nombre de usuario, contraseña, colecciones de obras guardadas, fecha de registro. Un usuario puede escribir múltiples reseñas, comentarios, valorar obras, tener colecciones.
+
+🧬VALORACIÓN🧬: Representa un puntuación que califica a una obra donde luego será usada para generar un promedio entre todas las valoraciones y aplicarlo a la obra. Una valoracion tiene: puntuación, reseña, usuario, fecha, obra.
+
+🧬COMENTARIO🧬: Representa un texto de opinión del usuario a una obra, foro o cualquier otra sección donde esté permitido comentar. El comentario tiene: texto del comentario, autor, fecha del comentario.
+
+🧬LIKES🧬: Representa una acción de aprobación del usuario sobre un comentario. Los likes tienen: usuario, fecha, destino.  
+
+🧬COLECCIONES🧬: Representa un conjunto de obras agrupadas en el perfil del usuario bajo un nombre personalizado que el usuario elija. Tiene nombre de la colección y obras. Una colección tiene cero, una o muchas obras.
+
+🧬FOROS🧬: Representa una sección de charla y discusión sobre un tema u obra. Tiene: título de discusión, contenido, comentarios, likes de los comentarios, fecha de la creación del foro. Un foro tiene cero, uno o muchos comentarios y likes.
+
+🧬ARTÍCULOS🧬: Representa una sección donde carga contenido dinámico como podría ser un tema de interés de una obra. Tiene: título, fecha y contenido. 

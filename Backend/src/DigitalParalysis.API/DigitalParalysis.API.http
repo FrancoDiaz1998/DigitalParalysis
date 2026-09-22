@@ -1,0 +1,6 @@
+@DigitalParalysis.API_HostAddress = http://localhost:5103
+
+GET {{DigitalParalysis.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

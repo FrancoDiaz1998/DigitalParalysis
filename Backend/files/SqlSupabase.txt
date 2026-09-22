@@ -1,0 +1,172 @@
+CREATE TABLE EstadoUsuario (
+    idEstado INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE TipoObra(
+    idTipo INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL UNIQUE,
+    descripcion TEXT
+);
+
+INSERT INTO EstadoUsuario (nombre) VALUES ('Activo'), ('Suspendido'), ('Eliminado');
+
+CREATE TABLE Usuario (
+    idUsuario INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL CHECK (char_length(nombre) >= 2),
+    apellido TEXT NOT NULL CHECK (char_length(apellido) >= 2),
+    nombreUsuario TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
+    contraseña TEXT NOT NULL,
+    foto TEXT,
+    fechaNacimiento DATE NOT NULL,
+    rol TEXT NOT NULL DEFAULT 'usuario' CHECK (rol IN ('usuario', 'admin')),
+    idEstado INTEGER NOT NULL DEFAULT 1,
+    fechaRegistro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fechaFinSuspension TIMESTAMP,
+    fechaEliminacion TIMESTAMP,
+    CONSTRAINT fk_usuario_estado FOREIGN KEY (idEstado) REFERENCES EstadoUsuario(idEstado)
+);
+
+CREATE TABLE Plataforma(
+    idPlataforma INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL UNIQUE CHECK(char_length(nombre) >= 2),
+    pais TEXT NOT NULL,
+    biografia TEXT,
+    foto TEXT,
+    fechaFundacion DATE
+);
+
+CREATE TABLE Genero(
+    idGenero INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL UNIQUE CHECK(char_length(nombre) >= 2),
+    descripcion TEXT CHECK(char_length(descripcion) >=2)
+);
+
+CREATE TABLE Director(
+    idDirector INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL CHECK(char_length(nombre) >= 2),
+    apellido TEXT NOT NULL CHECK(char_length(apellido) >= 2),
+    pais TEXT NOT NULL,
+    biografia TEXT,
+    foto TEXT,
+    fechaNacimiento DATE NOT NULL
+);
+
+CREATE TABLE Actor(
+    idActor INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre TEXT NOT NULL CHECK(char_length(nombre) >= 2),
+    apellido TEXT NOT NULL CHECK(char_length(apellido) >= 2),
+    pais TEXT NOT NULL,
+    biografia TEXT,
+    foto TEXT,
+    fechaNacimiento DATE NOT NULL
+);
+
+CREATE TABLE Obra(
+    idObra INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idTipo INTEGER NOT NULL,
+    titulo TEXT NOT NULL CHECK(char_length(titulo) >= 1),
+    anio INTEGER NOT NULL CHECK (anio >= 1888),
+    sinopsis TEXT NOT NULL,
+    duracion INTEGER NOT NULL CHECK(duracion > 0),
+    foto TEXT,
+    datosCuriosos TEXT,
+    paisOrigen TEXT NOT NULL,
+    CONSTRAINT fk_obra_tipo FOREIGN KEY (idTipo) REFERENCES TipoObra(idTipo)
+);
+
+CREATE TABLE ObraActor(
+    idObra INTEGER NOT NULL,
+    idActor INTEGER NOT NULL,
+    PRIMARY KEY(idObra, idActor),
+    CONSTRAINT fk_obraActor_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra) ON DELETE CASCADE,
+    CONSTRAINT fk_obraActor_actor FOREIGN KEY(idActor)REFERENCES Actor(idActor) ON DELETE CASCADE
+);
+
+CREATE TABLE ObraDirector(
+    idObra INTEGER NOT NULL,
+    idDirector INTEGER NOT NULL,
+    PRIMARY KEY(idObra, idDirector),
+    CONSTRAINT fk_obradirector_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra) ON DELETE CASCADE,
+    CONSTRAINT fk_obradirector_director FOREIGN KEY(idDirector) REFERENCES Director(idDirector) ON DELETE CASCADE
+);
+
+CREATE TABLE ObraGenero(
+    idObra INTEGER NOT NULL,
+    idGenero INTEGER NOT NULL,
+    PRIMARY KEY(idObra, idGenero),
+    CONSTRAINT fk_obraGenero_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra),
+    CONSTRAINT fk_obraGenero_genero FOREIGN KEY(idGenero) REFERENCES Genero(idGenero)
+);
+
+CREATE TABLE ObraPlataforma(
+    idObra INTEGER NOT NULL,
+    idPlataforma INTEGER NOT NULL,
+    PRIMARY KEY(idObra, idPlataforma),
+    CONSTRAINT fk_obraPlataforma_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra),
+    CONSTRAINT fk_obraPlataforma_plataforma FOREIGN KEY(idPlataforma) REFERENCES Plataforma(idPlataforma)
+);
+
+CREATE TABLE Coleccion(
+    idColeccion INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idUsuario INTEGER NOT NULL,
+    nombre TEXT NOT NULL CHECK(char_length(nombre) >=1),
+    CONSTRAINT fk_coleccion_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario),
+    UNIQUE (idUsuario, nombre)
+);
+
+CREATE TABLE ObraColeccion(
+    idObra INTEGER NOT NULL,
+    idColeccion INTEGER NOT NULL,
+    PRIMARY KEY(idObra, idColeccion),
+    CONSTRAINT fk_obracoleccion_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra) ON DELETE CASCADE,
+    CONSTRAINT fk_obracoleccion_coleccion FOREIGN KEY(idColeccion) REFERENCES Coleccion(idColeccion) ON DELETE CASCADE
+);
+
+CREATE TABLE FORO(
+    idForo INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idUsuario INTEGER NOT NULL,
+    titulo TEXT NOT NULL CHECK(char_length(titulo) >=3),
+    contenido TEXT NOT NULL CHECK(char_length(contenido) >=1),
+    fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_foro_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario)
+);
+
+CREATE TABLE COMENTARIO(
+    idComentario INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idUsuario INTEGER NOT NULL,
+    idForo INTEGER NOT NULL,
+    comentario TEXT NOT NULL CHECK(char_length(comentario) >=1),
+    fechaComentario TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comentario_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario),
+    CONSTRAINT fk_comentario_foro FOREIGN KEY(idForo) REFERENCES Foro(idForo)
+);
+
+CREATE TABLE LIKES(
+    idUsuario INTEGER NOT NULL,
+    idComentario INTEGER NOT NULL,
+    PRIMARY KEY(idUsuario, idComentario),
+    CONSTRAINT fk_likes_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario),
+    CONSTRAINT fk_likes_comentario FOREIGN KEY(idComentario) REFERENCES Comentario(idComentario)
+);
+
+CREATE TABLE Valoracion(
+    idValoracion INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idObra INTEGER NOT NULL,
+    idUsuario INTEGER NOT NULL,
+    puntuacion INTEGER NOT NULL CHECK(puntuacion BETWEEN 1 AND 10),
+    resenia TEXT,
+    CONSTRAINT fk_valoracion_obra FOREIGN KEY(idObra) REFERENCES Obra(idObra),
+    CONSTRAINT fk_valoracion_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario),
+    UNIQUE(idUsuario, idObra)
+);
+
+CREATE TABLE Articulo(
+    idArticulo INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    idUsuario INTEGER NOT NULL,
+    titulo TEXT NOT NULL CHECK(char_length(titulo) >=3),
+    contenido TEXT NOT NULL CHECK(char_length(contenido) >= 1),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_articulo_usuario FOREIGN KEY(idUsuario) REFERENCES Usuario(idUsuario)
+);

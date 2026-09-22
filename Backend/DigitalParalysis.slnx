@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DigitalParalysis.API/DigitalParalysis.API.csproj" />
+    <Project Path="src/DigitalParalysis.Application/DigitalParalysis.Application.csproj" />
+    <Project Path="src/DigitalParalysis.Domain/DigitalParalysis.Domain.csproj" />
+    <Project Path="src/DigitalParalysis.Infrastructure/DigitalParalysis.Infrastructure.csproj" />
+  </Folder>
+</Solution>
